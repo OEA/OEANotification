@@ -141,13 +141,16 @@ class NotificationView : UIView {
     }
     
     private func createCloseButton() {
-        
-        let closeButton = UIButton()
-        closeButton.frame = CGRectMake(self.frame.width - constants.nvPaddingRight, constants.nvdPaddingTop, constants.nvdHeight, constants.nvdWidth)
-        closeButton.setImage(UIImage(named: "close", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
-        closeButton.addTarget(self, action: "close", forControlEvents: .TouchDown)
-        self.addSubview(closeButton)
-        
+        let podBundle = NSBundle(forClass: self.classForCoder)
+        if let bundleURL = podBundle.URLForResource("OEANotification", withExtension: "bundle") {
+            if let bundle = NSBundle(URL: bundleURL) {
+                let closeButton = UIButton()
+                closeButton.frame = CGRectMake(self.frame.width - constants.nvPaddingRight, constants.nvdPaddingTop, constants.nvdHeight, constants.nvdWidth)
+                closeButton.setImage(UIImage(named: "close", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+                closeButton.addTarget(self, action: "close", forControlEvents: .TouchDown)
+                self.addSubview(closeButton)
+            }
+        }
     }
     
     private func addTimer(time: Double) {
