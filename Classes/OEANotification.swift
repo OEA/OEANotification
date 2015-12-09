@@ -21,7 +21,7 @@ public class OEANotification : UIView {
      /**
      Initial static method of creating notification.
      
-     - since:                   0.1
+     - since:                   0.1.0
      - author:                  @OEASLAN - omeremreaslan@gmail.com
      - parameter title:         The title of notification.
      - parameter subTitle:      The subtitle of notification.
@@ -41,7 +41,7 @@ public class OEANotification : UIView {
     /**
      Initial static method of creating notification.
      
-     - since:                   0.1
+     - since:                   0.1.0
      - author:                  @OEASLAN - omeremreaslan@gmail.com
      - parameter title:         The title of notification.
      - parameter subTitle:      The subtitle of notification.
@@ -64,7 +64,7 @@ public class OEANotification : UIView {
     /**
      Initial static method of creating notification.
      
-     - since:                   0.1
+     - since:                   0.1.0
      - author:                  @OEASLAN - omeremreaslan@gmail.com
      - parameter title:         The title of notification.
      - parameter subTitle:      The subtitle of notification.
@@ -99,10 +99,12 @@ public class OEANotification : UIView {
     
     /**
      Sets the default view controller as a main view controller.
-     - parameter notification: The notification to post.
-     - parameter value:        The data to be sent with the notification.
-     - parameter center:       The notification center from which the notification should be dispatched.
-     The default is `NSNotificationCenter.defaultCenter()`.
+     
+     - since:                    0.1.0
+     - author:                   @OEASLAN - omeremreaslan@gmail.com
+     - parameter viewController: The main controller which shows the notification.
+     - return:                   void
+
      */
     static public func setDefaultViewController (viewController: UIViewController) {
         self.viewController = viewController
