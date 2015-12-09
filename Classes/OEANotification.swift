@@ -160,7 +160,7 @@ public class OEANotification : UIView {
     
     // Checking device's rotation process and remove notifications to handle UI conflicts.
     static public func rotateRecognizer() {
-        self.rotated = (true ? false : true)
+        self.rotated = self.rotated ? false : true
         if self.rotated {
             removeOldNotifications()
             UIApplication.sharedApplication().delegate?.window??.windowLevel = UIWindowLevelNormal
