@@ -94,7 +94,11 @@ public class OEANotification : UIView {
             
             OEANotification.notificationCount++
             OEANotification.removeOldNotifications()
-            OEANotification.viewController.navigationController!.view.addSubview(notificationView)
+            if OEANotification.viewController.navigationController != nil {
+                OEANotification.viewController.navigationController!.view.addSubview(notificationView)
+            } else {
+                OEANotification.viewController.view.addSubview(notificationView)
+            }
     }
     
     /**
@@ -114,22 +118,42 @@ public class OEANotification : UIView {
     
     // MARK: - Helper methods
     static public func removeOldNotifications() {
-        for subUIView in OEANotification.viewController.navigationController!.view.subviews as [UIView] {
-            if subUIView.isKindOfClass(NotificationView) {
-                let view: NotificationView = subUIView as! NotificationView
-                view.notificationTimer.invalidate()
-                subUIView.removeFromSuperview()
-                OEANotification.notificationCount--
+        if OEANotification.viewController.navigationController != nil {
+            for subUIView in OEANotification.viewController.navigationController!.view.subviews as [UIView] {
+                if subUIView.isKindOfClass(NotificationView) {
+                    let view: NotificationView = subUIView as! NotificationView
+                    view.notificationTimer.invalidate()
+                    subUIView.removeFromSuperview()
+                    OEANotification.notificationCount--
+                }
+            }
+        } else {
+            for subUIView in OEANotification.viewController.view.subviews as [UIView] {
+                if subUIView.isKindOfClass(NotificationView) {
+                    let view: NotificationView = subUIView as! NotificationView
+                    view.notificationTimer.invalidate()
+                    subUIView.removeFromSuperview()
+                    OEANotification.notificationCount--
+                }
             }
         }
     }
     
     // Close active notification
     static public func closeNotification() {
-        for subUIView in OEANotification.viewController.navigationController!.view.subviews as [UIView] {
-            if subUIView.isKindOfClass(NotificationView) {
-                let view: NotificationView = subUIView as! NotificationView
-                view.close()
+        if OEANotification.viewController.navigationController != nil {
+            for subUIView in OEANotification.viewController.navigationController!.view.subviews as [UIView] {
+                if subUIView.isKindOfClass(NotificationView) {
+                    let view: NotificationView = subUIView as! NotificationView
+                    view.close()
+                }
+            }
+        } else {
+            for subUIView in OEANotification.viewController.view.subviews as [UIView] {
+                if subUIView.isKindOfClass(NotificationView) {
+                    let view: NotificationView = subUIView as! NotificationView
+                    view.close()
+                }
             }
         }
     }
