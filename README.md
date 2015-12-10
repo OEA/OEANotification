@@ -1,34 +1,62 @@
-OEANotification
-============
+# OEANotification
+
+[![Version](https://img.shields.io/cocoapods/v/OEANotification.svg?style=flat)](http://cocoapods.org/pods/OEANotification)
+[![License](https://img.shields.io/cocoapods/l/OEANotification.svg?style=flat)](http://cocoapods.org/pods/OEANotification)
+[![Platform](https://img.shields.io/cocoapods/p/OEANotification.svg?style=flat)](http://cocoapods.org/pods/OEANotification)
+[![Swift 2.1](https://img.shields.io/badge/Swift-2.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
+
 OEANotification is an iOS library which provides to create notifications and customize them easily.
 You can create notifications with just one line of code ,if you are bored UIAlertView.
 
-[![CocoaPods](https://img.shields.io/cocoapods/v/OEANotification.svg)](https://github.com/OEASLAN/OEANotification)
+![](ScreenRecord/OEANotification.gif)
 
-# Installation
 
-## Cocoapods
-
-`pod 'OEANotification', '~> 0.1.0'`
-
-# Usage
-
-Set a main view controller
+## Usage
 
 ```swift
-import UIKit
-import OEANotification
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         OEANotification.setDefaultViewController(self)
+        // to create simple success notification
         OEANotification.notify("Test Title", subTitle: "Test SubTitle", image: nil, type: NotificationType.Success, isDismissable: true)
+        // to create info notification
+        //OEANotification.notify("Test Title", subTitle: "Test SubTitle", image: nil, type: NotificationType.Info, isDismissable: true)
+        // to create warning notification
+        //OEANotification.notify("Test Title", subTitle: "Test SubTitle", image: nil, type: NotificationType.Warning, isDismissable: true)
     }
 }
 ```
 
-# License
+## Installation
 
-OEANotification is released under an MIT license. See LICENSE for more information.
+OEANotification is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod "OEANotification"
+```
+
+#### Roadmap 
+
+- [X] Default Notification Types (Warning, Info, Success)
+- [ ] Custom Notification Type
+- [X] Device rotation handling
+- [X] Completion Handler based notification
+- [ ] View Tapped Handler based notification
+- [ ] Creating big example of OEANotification
+- [ ] UI Tests
+- [ ] Setup Travis
+
+
+## Author
+
+Ömer Aslan, omeremreaslan@gmail.com
+
+## License
+
+OEANotification is available under the MIT license. See the LICENSE file for more info.
+
+
