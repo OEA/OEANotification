@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "OEANotification"
-  s.version          = "0.1.0"
+  s.version          = "0.2.0"
   s.summary          = "OEANotification is the very flexible notification library."
   s.description      = <<-DESC
                         This iOS library provides to create notifications and customize them easily.
