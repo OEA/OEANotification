@@ -26,6 +26,15 @@ class ViewController: UIViewController {
         //OEANotification.notify("Test Title", subTitle: "Test SubTitle", image: nil, type: NotificationType.Info, isDismissable: true)
         // to create warning notification
         //OEANotification.notify("Test Title", subTitle: "Test SubTitle", image: nil, type: NotificationType.Warning, isDismissable: true)
+        // to create completion handler based notification
+        OEANotification.notify("Test Title", subTitle: "Test Subtitle", image: nil, type: .Success, isDismissable: true, completion: { () -> Void in
+                print("completed")
+            }, touchHandler: nil)
+        // to create touchHandler based notificaiton
+        OEANotification.notify("Test Title", subTitle: "Test Subtitle", image: nil, type: .Success, isDismissable: true, completion: { () -> Void in
+                print("completed")
+            }) { () -> Void in
+                print("touched event")
     }
 }
 ```
@@ -45,7 +54,7 @@ pod "OEANotification"
 - [ ] Custom Notification Type
 - [X] Device rotation handling
 - [X] Completion Handler based notification
-- [ ] View Tapped Handler based notification
+- [X] View Tapped Handler based notification
 - [ ] Creating big example of OEANotification
 - [ ] UI Tests
 - [ ] Setup Travis

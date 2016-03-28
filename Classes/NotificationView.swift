@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class NotificationView : UIView {
+class NotificationView : UIView{
     let bundle = NSBundle(identifier: "com.omer.OEANotification")
     var notificationTimer: NSTimer!
     var title: String?
@@ -23,20 +23,27 @@ class NotificationView : UIView {
     
     init(frame: CGRect, title: String, subTitle: String?, type: NotificationType?, isDismissable: Bool) {
         super.init(frame: frame)
-        self.initVariables(title, subTitle: subTitle, image: nil, type: type, completionHandler: {}, touchHandler: {}, isDismissable: isDismissable)
+        self.initVariables(title, subTitle: subTitle, image: nil, type: type, completionHandler: nil, touchHandler: nil, isDismissable: isDismissable)
         self.setupNotification()
        
     }
     
     init(frame: CGRect, title: String, subTitle: String?, image: UIImage?, type: NotificationType?, isDismissable: Bool) {
         super.init(frame: frame)
-        self.initVariables(title, subTitle: subTitle, image: image, type: type, completionHandler: {}, touchHandler: {}, isDismissable: isDismissable)
+        self.initVariables(title, subTitle: subTitle, image: image, type: type, completionHandler: nil, touchHandler: nil, isDismissable: isDismissable)
         self.setupNotification()
     }
     
     init(frame: CGRect, title: String, subTitle: String?, image: UIImage?, type: NotificationType?, completionHandler: (() -> Void)?, isDismissable: Bool) {
         super.init(frame: frame)
-        self.initVariables(title, subTitle: subTitle, image: image, type: type, completionHandler: completionHandler, touchHandler: {}, isDismissable: isDismissable)
+        self.initVariables(title, subTitle: subTitle, image: image, type: type, completionHandler: completionHandler, touchHandler: nil, isDismissable: isDismissable)
+        self.setupNotification()
+    }
+    
+    init(frame: CGRect, title: String, subTitle: String?, image: UIImage?, type: NotificationType?, completionHandler: (() -> Void)?, touchHandler: (() -> Void)?, isDismissable: Bool) {
+        super.init(frame: frame)
+        
+        self.initVariables(title, subTitle: subTitle, image: image, type: type, completionHandler: completionHandler, touchHandler: touchHandler, isDismissable: isDismissable)
         self.setupNotification()
     }
     
@@ -52,6 +59,7 @@ class NotificationView : UIView {
     }
     
     private func setupNotification() {
+        
         self.createBackground()
         if self.isDismissable {
             constants.nvPaddingRight += constants.nvdWidth
@@ -70,7 +78,20 @@ class NotificationView : UIView {
         if self.isDismissable {
             constants.nvPaddingRight -= constants.nvdPaddingLeft
         }
+        
+        if self.touchHandler != nil {
+            self.createTouchEvent()
+        }
         self.addNotificationView()
+    }
+    
+    private func createTouchEvent() {
+        let tap = UITapGestureRecognizer(target: self, action: "handleTap:")
+        self.addGestureRecognizer(tap)
+    }
+    
+    func handleTap(recognizer: UITapGestureRecognizer) {
+        self.touchHandler!()
     }
     
     private func addNotificationView() {
@@ -83,6 +104,7 @@ class NotificationView : UIView {
                         self.completionHandler!()
                     }
                 }
+                
         }
         
         self.addTimer(constants.nvaShownTimer)
@@ -161,15 +183,15 @@ class NotificationView : UIView {
     
     func close() {
         self.notificationTimer.invalidate()
+       
         NotificationView.animateWithDuration(constants.nvaTimer, animations: { () -> Void in
-            self.frame.origin.y = self.constants.nvStartYPoint
+                self.frame.origin.y = self.constants.nvStartYPoint
             }) { (Bool) -> Void in
                 if OEANotification.notificationCount == 1 {
                     UIApplication.sharedApplication().delegate?.window??.windowLevel = UIWindowLevelNormal
                     OEANotification.removeOldNotifications()
                 }
         }
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
