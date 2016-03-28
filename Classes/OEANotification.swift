@@ -58,7 +58,7 @@ public class OEANotification : UIView {
         isDismissable: Bool
         ) {
             
-            self.notify(title, subTitle: subTitle, image: image, type: type, isDismissable: isDismissable, completion: {})
+            self.notify(title, subTitle: subTitle, image: image, type: type, isDismissable: isDismissable, completion: nil, touchHandler: nil)
     }
     
     /**
@@ -80,7 +80,8 @@ public class OEANotification : UIView {
         image: UIImage?,
         type: NotificationType,
         isDismissable: Bool,
-        completion: () -> Void
+        completion: (() -> Void)?,
+        touchHandler: (() ->Void)?
         ) {
             let notificationView: NotificationView = NotificationView(
                 frame: rect,
@@ -89,11 +90,14 @@ public class OEANotification : UIView {
                 image: image,
                 type: type,
                 completionHandler: completion,
+                touchHandler: touchHandler,
                 isDismissable: isDismissable
             )
             
             OEANotification.notificationCount++
             OEANotification.removeOldNotifications()
+            
+            print(OEANotification.viewController.view.frame)
             if OEANotification.viewController.navigationController != nil {
                 OEANotification.viewController.navigationController!.view.addSubview(notificationView)
             } else {
@@ -158,19 +162,12 @@ public class OEANotification : UIView {
         }
     }
     
+    
     // Checking device's rotation process and remove notifications to handle UI conflicts.
     static public func rotateRecognizer() {
-        self.rotated = self.rotated ? false : true
-        if self.rotated {
-            removeOldNotifications()
-            UIApplication.sharedApplication().delegate?.window??.windowLevel = UIWindowLevelNormal
-            rect = CGRectMake(constant.nvMarginLeft, constant.nvStartYPoint, OEANotification.viewController.view.frame.height - constant.nvMarginLeft - constant.nvMarginRight, constant.nvHeight)
-        } else {
-            removeOldNotifications()
-            UIApplication.sharedApplication().delegate?.window??.windowLevel = UIWindowLevelNormal
-            rect = CGRectMake(constant.nvMarginLeft, constant.nvStartYPoint, OEANotification.viewController.view.frame.width - constant.nvMarginLeft - constant.nvMarginRight, constant.nvHeight)
-        }
-        
+        removeOldNotifications()
+        UIApplication.sharedApplication().delegate?.window??.windowLevel = UIWindowLevelNormal
+        self.rect = CGRectMake(constant.nvMarginLeft, constant.nvStartYPoint, OEANotification.viewController.view.frame.width - constant.nvMarginLeft - constant.nvMarginRight, constant.nvHeight)
     }
     
     
