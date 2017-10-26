@@ -9,18 +9,19 @@
 import UIKit
 
 public class OEANotification : UIView {
-    
+
     static let constant = Constants()
-    static var rect = CGRectMake(constant.nvMarginLeft, constant.nvStartYPoint, OEANotification.viewController.view.frame.width - constant.nvMarginLeft - constant.nvMarginRight, constant.nvHeight)
+
+    static var rect = CGRect(x: constant.nvMarginLeft, y: constant.nvStartYPoint, width: OEANotification.viewController.view.frame.width - constant.nvMarginLeft - constant.nvMarginRight, height: constant.nvHeight)
     static var viewController: UIViewController!
     static var notificationCount = 0
     static var rotated:Bool = false
-    
+
     // MARK: - Initial notification methods
-    
+
      /**
      Initial static method of creating notification.
-     
+
      - since:                   0.1.0
      - author:                  @OEASLAN - omeremreaslan@gmail.com
      - parameter title:         The title of notification.
@@ -35,12 +36,12 @@ public class OEANotification : UIView {
         type: NotificationType,
         isDismissable: Bool
         ){
-            self.notify(title, subTitle: subTitle, image: nil, type: type, isDismissable: isDismissable)
+        self.notify(title: title, subTitle: subTitle, image: nil, type: type, isDismissable: isDismissable)
     }
-    
+
     /**
      Initial static method of creating notification.
-     
+
      - since:                   0.1.0
      - author:                  @OEASLAN - omeremreaslan@gmail.com
      - parameter title:         The title of notification.
@@ -57,13 +58,13 @@ public class OEANotification : UIView {
         type: NotificationType,
         isDismissable: Bool
         ) {
-            
-            self.notify(title, subTitle: subTitle, image: image, type: type, isDismissable: isDismissable, completion: nil, touchHandler: nil)
+
+        self.notify(title: title, subTitle: subTitle, image: image, type: type, isDismissable: isDismissable, completion: nil, touchHandler: nil)
     }
-    
+
     /**
      Initial static method of creating notification.
-     
+
      - since:                   0.1.0
      - author:                  @OEASLAN - omeremreaslan@gmail.com
      - parameter title:         The title of notification.
@@ -93,10 +94,10 @@ public class OEANotification : UIView {
                 touchHandler: touchHandler,
                 isDismissable: isDismissable
             )
-            
-            OEANotification.notificationCount++
+
+            OEANotification.notificationCount += 1
             OEANotification.removeOldNotifications()
-            
+
             print(OEANotification.viewController.view.frame)
             if OEANotification.viewController.navigationController != nil {
                 OEANotification.viewController.navigationController!.view.addSubview(notificationView)
@@ -104,10 +105,10 @@ public class OEANotification : UIView {
                 OEANotification.viewController.view.addSubview(notificationView)
             }
     }
-    
+
     /**
      Sets the default view controller as a main view controller.
-     
+
      - since:                    0.1.0
      - author:                   @OEASLAN - omeremreaslan@gmail.com
      - parameter viewController: The main controller which shows the notification.
@@ -116,61 +117,61 @@ public class OEANotification : UIView {
      */
     static public func setDefaultViewController (viewController: UIViewController) {
         self.viewController = viewController
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotateRecognizer", name: UIDeviceOrientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.rotateRecognizer), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
-    
-    
+
+
     // MARK: - Helper methods
     static public func removeOldNotifications() {
         if OEANotification.viewController.navigationController != nil {
             for subUIView in OEANotification.viewController.navigationController!.view.subviews as [UIView] {
-                if subUIView.isKindOfClass(NotificationView) {
+                if subUIView.isKind(of: NotificationView.self) {
                     let view: NotificationView = subUIView as! NotificationView
                     view.notificationTimer.invalidate()
                     subUIView.removeFromSuperview()
-                    OEANotification.notificationCount--
+                    OEANotification.notificationCount -= 1
                 }
             }
         } else {
             for subUIView in OEANotification.viewController.view.subviews as [UIView] {
-                if subUIView.isKindOfClass(NotificationView) {
+                if subUIView.isKind(of: NotificationView.self) {
                     let view: NotificationView = subUIView as! NotificationView
                     view.notificationTimer.invalidate()
                     subUIView.removeFromSuperview()
-                    OEANotification.notificationCount--
+                    OEANotification.notificationCount -= 1
                 }
             }
         }
     }
-    
+
     // Close active notification
     static public func closeNotification() {
         if OEANotification.viewController.navigationController != nil {
             for subUIView in OEANotification.viewController.navigationController!.view.subviews as [UIView] {
-                if subUIView.isKindOfClass(NotificationView) {
+                if subUIView.isKind(of: NotificationView.self) {
                     let view: NotificationView = subUIView as! NotificationView
                     view.close()
                 }
             }
         } else {
             for subUIView in OEANotification.viewController.view.subviews as [UIView] {
-                if subUIView.isKindOfClass(NotificationView) {
+                if subUIView.isKind(of: NotificationView.self) {
                     let view: NotificationView = subUIView as! NotificationView
                     view.close()
                 }
             }
         }
     }
-    
-    
+
+
     // Checking device's rotation process and remove notifications to handle UI conflicts.
-    static public func rotateRecognizer() {
+    @objc static public func rotateRecognizer() {
         removeOldNotifications()
-        UIApplication.sharedApplication().delegate?.window??.windowLevel = UIWindowLevelNormal
-        self.rect = CGRectMake(constant.nvMarginLeft, constant.nvStartYPoint, OEANotification.viewController.view.frame.width - constant.nvMarginLeft - constant.nvMarginRight, constant.nvHeight)
+        UIApplication.shared.delegate?.window??.windowLevel = UIWindowLevelNormal
+        self.rect = CGRect(x: constant.nvMarginLeft, y: constant.nvStartYPoint, width: OEANotification.viewController.view.frame.width - constant.nvMarginLeft - constant.nvMarginRight, height: constant.nvHeight)
     }
-    
-    
+
+
 }
 
 public enum NotificationType {
@@ -178,6 +179,3 @@ public enum NotificationType {
     case Success
     case Info
 }
-
-
-
