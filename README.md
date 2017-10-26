@@ -19,22 +19,22 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        OEANotification.setDefaultViewController(self)
+        OEANotification.setDefaultViewController(viewController: self)
         // to create simple success notification
-        OEANotification.notify("Test Title", subTitle: "Test SubTitle", image: nil, type: NotificationType.Success, isDismissable: true)
+        OEANotification.notify(title: "Test Title", subTitle: "Test SubTitle", image: nil, type: NotificationType.Success, isDismissable: true)
         // to create info notification
         //OEANotification.notify("Test Title", subTitle: "Test SubTitle", image: nil, type: NotificationType.Info, isDismissable: true)
         // to create warning notification
         //OEANotification.notify("Test Title", subTitle: "Test SubTitle", image: nil, type: NotificationType.Warning, isDismissable: true)
         // to create completion handler based notification
-        OEANotification.notify("Test Title", subTitle: "Test Subtitle", image: nil, type: .Success, isDismissable: true, completion: { () -> Void in
-                print("completed")
-            }, touchHandler: nil)
+        OEANotification.notify(title: "Test Title", subTitle: "Test Subtitle", image: nil, type: .Success, isDismissable: true, completion: { () -> Void in
+            print("completed")
+        }, touchHandler: nil)
         // to create touchHandler based notificaiton
-        OEANotification.notify("Test Title", subTitle: "Test Subtitle", image: nil, type: .Success, isDismissable: true, completion: { () -> Void in
-                print("completed")
-            }) { () -> Void in
-                print("touched event")
+        OEANotification.notify(title: "Test Title", subTitle: "Test Subtitle", image: nil, type: .Success, isDismissable: true, completion: { () -> Void in
+            print("completed")
+        }) { () -> Void in
+            print("touched event")
     }
 }
 ```
@@ -48,7 +48,7 @@ it, simply add the following line to your Podfile:
 pod "OEANotification"
 ```
 
-#### Roadmap 
+#### Roadmap
 
 - [X] Default Notification Types (Warning, Info, Success)
 - [ ] Custom Notification Type
@@ -67,5 +67,3 @@ pod "OEANotification"
 ## License
 
 OEANotification is available under the MIT license. See the LICENSE file for more info.
-
-
