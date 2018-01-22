@@ -1,0 +1,5 @@
+use_frameworks!
+
+target 'OEANotification_Example' do
+  pod 'OEANotification', :path => '../'
+end

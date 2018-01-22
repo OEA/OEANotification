@@ -1,23 +1,21 @@
 Pod::Spec.new do |s|
-  s.name             = "OEANotification"
-  s.version          = "0.2.0"
-  s.summary          = "OEANotification is the very flexible notification library."
+  s.name             = 'OEANotification'
+  s.version          = '0.1.0'
+  s.summary          = 'A short description of OEANotification.'
   s.description      = <<-DESC
-                        This iOS library provides to create notifications and customize them easily.
-                        You can create notifications with just one line of code ,if you are bored UIAlertView.
+TODO: Add long description of the pod here.
                        DESC
-  s.homepage         = "https://github.com/OEASLAN/OEANotification"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
-  s.license          = 'MIT'
-  s.author           = { "Ömer Aslan" => "omer.aslan@ozu.edu.tr" }
-  s.source           = { :git => "https://github.com/OEASLAN/OEANotification.git", :tag => s.version.to_s }
-  s.social_media_url = 'https://twitter.com/OEASLAN'
 
-  s.platform     = :ios, '9.0'
-  s.requires_arc = true
+  s.homepage         = 'https://github.com/OEA/OEANotification'
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.author           = { 'OEA' => 'omeremreaslan@gmail.com' }
+  s.source           = { :git => 'https://github.com/OEA/OEANotification.git', :tag => s.version.to_s }
+  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.source_files = 'Classes/**/*'
+  s.ios.deployment_target = '9.0'
 
-  s.frameworks = 'UIKit'
+  s.source_files = 'OEANotification/Classes/**/*'
+
+  s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'SnapKit', '~> 4.0'
 end
